@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: lightcyan;
+    color: darkblue;
+}
+
+h1 {
+    margin-bottom: 80px;
+    font-size: 3rem;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(10vw, 120px)); /* 3 columns of 100px each */
+    grid-template-rows: repeat(3, minmax(10vw, 120px));   /* 3 rows of 100px each */
+}
+
+.grid div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; /* Font size for text (e.g., X or O) */
+    cursor: pointer;
+}
+
+.grid div:nth-child(-n+6) { /* Top row and middle row */
+    border-bottom: 8px solid black;
+}
+.grid div:nth-child(1),
+.grid div:nth-child(4),
+.grid div:nth-child(7) { /* First column */
+    border-right: 8px solid black;
+}
+.grid div:nth-child(3),
+.grid div:nth-child(6),
+.grid div:nth-child(9) { /* Third column */
+    border-left: 8px solid black;
+}
+
+.grid div .cross {
+    width: 70%; /* Fit the width of the parent div */
+    height: 70%; /* Fit the height of the parent div */
+    object-fit: contain; /* Ensures the image maintains its aspect ratio */
+    max-width: 90%; /* Prevents overflow */
+    max-height: 90%; /* Prevents overflow */
+}
+
+.grid div .circle {
+    width: 90%; /* Fit the width of the parent div */
+    height: 90%; /* Fit the height of the parent div */
+    object-fit: contain; /* Ensures the image maintains its aspect ratio */
+    max-width: 90%; /* Prevents overflow */
+    max-height: 90%; /* Prevents overflow */
+}
