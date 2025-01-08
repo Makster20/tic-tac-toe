@@ -1,3 +1,7 @@
+html{
+    margin
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -58,4 +62,47 @@ main {
     object-fit: contain; /* Ensures the image maintains its aspect ratio */
     max-width: 90%; /* Prevents overflow */
     max-height: 90%; /* Prevents overflow */
+}
+
+.cover {
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background-color: rgba(0, 0, 0, 0.25); /* Slightly transparent background */
+    position: fixed; /* Fix to the viewport */
+    top: 0; /* Align to the top of the viewport */
+    left: 0; /* Align to the left of the viewport */
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    z-index: 10; /* Ensure it appears above other elements */
+}
+
+.cover .choices {
+    display: flex; /* Use Flexbox for horizontal alignment */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px; /* Add spacing between the divs */
+    margin-bottom: 20px; /* Add some space below the choices */
+}
+
+.choices div {
+    background-color: white; /* Give the divs a visible background */
+    padding: 20px 40px; /* Add some padding for better appearance */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1.5rem; /* Adjust text size */
+    cursor: pointer; /* Indicate clickable behavior */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
+    text-align: center; /* Center text inside the divs */
+}
+
+.cover button {
+    padding: 10px 20px; /* Button padding */
+    font-size: 1rem; /* Adjust button text size */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners for the button */
+    background-color: darkblue; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Show pointer on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    margin-top: 10px; /* Space above the button */
 }
