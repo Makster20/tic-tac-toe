@@ -8,7 +8,15 @@ function GameBoard(){
 
     const getGameboard = () => gameboard;
 
-    return {getGameboard};
+    const clearGameboard = gameboard => {
+        for (let i = 0; i < 3; i++){
+            for (let j = 0; j < 3; j++){
+                gameboard[i][j] = '';
+            }
+        }
+    }
+
+    return {getGameboard, clearGameboard};
 
 }
 
@@ -47,6 +55,10 @@ function Player(){
     
 
     const computerAddMark = gameboard => {
+
+        if (fullGameboard(gameboard)){
+            return;
+        }
        
         // Copy gameboard to oldGameboard to check which position has been changed
         let oldGameboard = JSON.parse(JSON.stringify(gameboard)); // Deep copy
@@ -75,7 +87,7 @@ function Player(){
             }
             if (col[0] === 'X' && col[1] === 'X'){
                 if (col[2] === ''){
-                    gameboard[i][2] = 'O';
+                    gameboard[2][i] = 'O';
                     return getComputerPosition(oldGameboard, gameboard);
                 }
             }
@@ -88,7 +100,7 @@ function Player(){
             }
             if (col[2] === 'X' && col[1] === 'X'){
                 if (col[0] === ''){
-                    gameboard[i][0] = 'O';
+                    gameboard[0][i] = 'O';
                     return getComputerPosition(oldGameboard, gameboard);
                 }
             }
@@ -147,6 +159,21 @@ function Player(){
             }
         }
         return;
+    }
+
+    const fullGameboard = gameboard => {
+        let counter = 0;
+        for (let i = 0; i < 3; i++){
+            for (let j = 0; j < 3; j++){
+                if (gameboard[i][j] !== ''){
+                    counter++;
+                }
+            }
+        }
+        if (counter === 9){
+            return true;
+        }
+        return false;
     }
 
     return {chooseOpponent, humanAddMark, computerAddMark, randomComputerAddMark, getComputerPosition};
@@ -223,7 +250,7 @@ function GameController(){
         let counter = 0;
         for (let i = 0; i < 3; i++){
             for (let j = 0; j < 3; j++){
-                if (gameboard[i][j] === ''){
+                if (gameboard[i][j] !== ''){
                     counter++;
                 }
             }
@@ -255,11 +282,16 @@ function ScreenController(){
     const playerOpponent = document.querySelector('.player2');
     const computerOpponent = document.querySelector('.computer');
     const playButton = document.querySelector('.play');
+    const winnerCover = document.querySelector('.winner-cover');
+    const winnerText = document.querySelector('.winner-text');
+    const playAgainButton = document.querySelector('.playagain')
     const grid = document.querySelector('.grid');
     const gridCells = document.querySelectorAll('.grid div');
 
     // Select opponent
     let opponent;
+
+    let winner;
 
     playerOpponent.addEventListener('click', () => {
         playerOpponent.style.backgroundColor = 'darkblue';
@@ -318,6 +350,29 @@ function ScreenController(){
                 else{
                     cell.innerHTML = '<img src="cross.svg" alt="" class="cross">';
 
+                    winner = game.checkWinner(gameboard)
+                    if (winner === 'player1 wins'){
+                        cell.innerHTML = '<img src="cross.svg" alt="" class="cross">';
+                        console.log('player1')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 1 Wins!'
+                    }
+                    else if (winner === 'player2 wins'){
+                        console.log('caf')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 2 Wins!'
+                    } 
+                    else if (winner === 'draw'){
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Draw!'
+                        return
+                    }
+                    console.log('yesyesyeys')
+
+                    game.logGameboard(gameboard)
                     playerTurn = 'O';
                     
                     if (opponent === 'computer'){
@@ -325,6 +380,27 @@ function ScreenController(){
                     console.log(cellPosition)
                     let computerCell = document.getElementsByClassName(cellPosition)[0];
                     computerCell.innerHTML = '<img src="circle.svg" alt="" class="circle">';
+
+                    winner = game.checkWinner(gameboard)
+                    if (winner === 'player1 wins'){
+                        console.log('player1')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 1 Wins!'
+                    }
+                    else if (winner === 'player2 wins'){
+                        console.log('caf')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 2 Wins!'
+                    } 
+                    else if (winner === 'draw'){
+                        cell.innerHTML = '<img src="cross.svg" alt="" class="cross">';
+                        console.log('sadfasdfsdfsadfsd')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Draw!'
+                    }
 
                     playerTurn = 'X';
                     game.logGameboard(gameboard)
@@ -345,14 +421,27 @@ function ScreenController(){
 
                     playerTurn = 'X';
                     game.logGameboard(gameboard)
-                    }
-                }
-                else if (opponent === 'computer'){
-                    player.computerAddMark(gameboard);
-                    cell.innerHTML = '<img src="circle.svg" alt="" class="circle">';
 
-                    playerTurn = 'X';
-                    game.logGameboard(gameboard)
+                    winner = game.checkWinner(gameboard)
+                    if (winner === 'player1 wins'){
+                        console.log('player1')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 1 Wins!'
+                    }
+                    else if (winner === 'player2 wins'){
+                        console.log('caf')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Player 2 Wins!'
+                    } 
+                    else if (winner === 'draw'){
+                        console.log('sadfasdfsdfsadfsd')
+                        cover.style.display = 'none';
+                        winnerCover.style.display = 'flex';
+                        winnerText.innerText = 'Draw!'
+                    }
+                    }
                 }
 
                 
@@ -361,35 +450,28 @@ function ScreenController(){
 
     });
     
+    playAgainButton.addEventListener('click', () => {
+        cover.style.display = 'flex';
+        winnerCover.style.display = 'none';
+        GameBoard().clearGameboard(gameboard);
+        clearScreenCells();
 
-    // // Testing in console, player vs computer
-    // player.humanAddMark(gameboard, 0, 'X');
-    // player.computerAddMark(gameboard);
-    // game.logGameboard(gameboard);
+        playerOpponent.style.backgroundColor = 'white';
+        playerOpponent.style.color = 'darkblue';
+        playerOpponent.classList.remove('clicked');
 
-    // player.humanAddMark(gameboard, 1, 'X');
-    // player.computerAddMark(gameboard);
-    // game.logGameboard(gameboard);
+        computerOpponent.style.backgroundColor = 'white';
+        computerOpponent.style.color = 'darkblue';
+        computerOpponent.classList.remove('clicked');
+        playerTurn = 'X';
+    });
 
-    // player.humanAddMark(gameboard, 2, 'X');
-    // player.computerAddMark(gameboard);
-    // game.logGameboard(gameboard);
-
-
-    // result = game.checkWinner(gameboard);
-    // console.log(result)
-    // if (result === 'player1 wins'){
-    //     console.log('p1')
-    // }
-    // else if (result === 'player2 wins'){
-    //     console.log('p2')
-    // }
-    // else if (result === 'draw'){
-    //     console.log('draw')
-    // }
-    // else{
-    //     console.log('ez')
-    // }
+    const clearScreenCells = () => {
+        gridCells.forEach(cell => {
+            cell.innerHTML = '';
+        })
+    }
+        
 }
 
 ScreenController();

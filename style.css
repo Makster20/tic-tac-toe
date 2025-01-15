@@ -122,3 +122,42 @@ main {
 .shake {
     animation: shake 0.5s ease-in-out; /* Adjust duration and easing as needed */
 }
+
+.winner-cover {
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    background-color: rgba(0, 0, 0, 0.25); /* Slightly transparent background */
+    position: fixed; /* Fix to the viewport */
+    top: 0; /* Align to the top of the viewport */
+    left: 0; /* Align to the left of the viewport */
+    display: none; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    z-index: 10; /* Ensure it appears above other elements */
+    color: white;
+}
+
+.winner-cover h2 {
+    font-size: 3.5rem;
+}
+
+.winner-cover div{
+    background-color: white; /* Give the divs a visible background */
+    padding: 20px 40px; /* Add some padding for better appearance */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1.5rem; /* Adjust text size */
+    cursor: pointer; /* Indicate clickable behavior */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
+    text-align: center; /* Center text inside the divs */
+}
+
+.winner-cover div svg{
+    width: 100px;
+    stroke: black;
+}
+
+.winner-cover div p{
+    color: black;
+    font-size: 2rem;
+}
